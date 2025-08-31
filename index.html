@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>HumanTyper</title>
+  </head>
+  <body>
+    <h1>Type into your Google Doc</h1>
+    <input id="docId" placeholder="Enter Doc ID"><br><br>
+    <textarea id="text" placeholder="Enter text here"></textarea><br><br>
+    <button onclick="sendText()">Send</button>
+
+    <script>
+      async function sendText() {
+        const docId = document.getElementById("docId").value;
+        const text = document.getElementById("text").value;
+
+        const res = await fetch("https://humantyper.onrender.com/type-doc", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ docId, text })
+        });
+
+        const data = await res.json();
+        alert(JSON.stringify(data));
+      }
+    </script>
+  </body>
+</html>
