@@ -45,6 +45,7 @@
         }
       } catch (err) {
         console.error(err);
+        document.getElementById("loginStatus").textContent = "❌ Error checking login status";
       }
     }
 
@@ -63,6 +64,11 @@
       const text = document.getElementById("text").value;
       const docId = document.getElementById("docId").value;
 
+      if (!text.trim()) {
+        document.getElementById("result").textContent = "❌ Please enter some text";
+        return;
+      }
+
       try {
         const res = await fetch(`${backend}/type-doc`, {
           method: "POST",
@@ -80,7 +86,7 @@
           result.textContent = "✅ Finished typing! Doc ID: " + data.message;
         }
       } catch (err) {
-        document.getElementById("result").textContent = "❌ Error sending request: " + err;
+        document.getElementById("result").textContent = "❌ Error sending request: " + err.message;
       }
     });
   </script>
