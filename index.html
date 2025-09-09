@@ -31,8 +31,14 @@
     // Function to check login status and update UI
     async function checkLogin() {
       try {
-        const res = await fetch(`${backend}/me`, { credentials: "include" });
+        console.log("Checking login status...");
+        const res = await fetch(`${backend}/me`, { 
+          credentials: "include",
+          mode: "cors"
+        });
+        console.log("Login check response:", res.status);
         const data = await res.json();
+        console.log("Login check data:", data);
         const status = document.getElementById("loginStatus");
         if (data.loggedIn) {
           status.textContent = "✅ Logged in!";
@@ -44,8 +50,8 @@
           document.getElementById("login-section").style.display = "block";
         }
       } catch (err) {
-        console.error(err);
-        document.getElementById("loginStatus").textContent = "❌ Error checking login status";
+        console.error("Login check error:", err);
+        document.getElementById("loginStatus").textContent = "❌ Error checking login status: " + err.message;
       }
     }
 
