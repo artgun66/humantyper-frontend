@@ -28,12 +28,10 @@
   <script>
     const backend = "https://humantyper.onrender.com";
 
-    // Check login status on page load
+    // Function to check login status and update UI
     async function checkLogin() {
       try {
-        const res = await fetch(`${backend}/me`, {
-          credentials: "include"
-        });
+        const res = await fetch(`${backend}/me`, { credentials: "include" });
         const data = await res.json();
         const status = document.getElementById("loginStatus");
         if (data.loggedIn) {
@@ -42,6 +40,7 @@
           document.getElementById("login-section").style.display = "none";
         } else {
           status.textContent = "❌ Not logged in";
+          document.getElementById("doc-section").style.display = "none";
           document.getElementById("login-section").style.display = "block";
         }
       } catch (err) {
@@ -49,7 +48,10 @@
       }
     }
 
-    checkLogin();
+    // Call checkLogin on page load
+    window.addEventListener("DOMContentLoaded", () => {
+      checkLogin();
+    });
 
     // Login button
     document.getElementById("loginBtn").addEventListener("click", () => {
